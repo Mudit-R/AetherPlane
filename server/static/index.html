@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AetherPlane | Ultra-Low-Latency Network Data Plane & AI Smart Traffic Engine</title>
+    <title>AetherPlane | High-Performance Network Data Plane & AI Traffic Engine</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,9 +15,7 @@
         <!-- Top Navigation Header -->
         <header class="top-nav">
             <div class="brand">
-                <div class="brand-logo">
-                    <span class="logo-glyph">❖</span>
-                </div>
+                <div class="brand-logo">AP</div>
                 <div class="brand-info">
                     <div class="title-row">
                         <h1>AETHERPLANE</h1>
@@ -25,7 +23,7 @@
                         <span class="badge badge-subtle">eBPF / XDP</span>
                         <span class="badge badge-subtle">C++20</span>
                     </div>
-                    <p class="tagline">Distributed Ultra-Low-Latency Data Plane & AI-Augmented Smart Traffic Engineering Engine</p>
+                    <p class="tagline">Distributed Low-Latency Data Plane and Smart Traffic Engineering Engine</p>
                 </div>
             </div>
 
@@ -35,9 +33,9 @@
                     <span class="live-text">FAST-PATH ACTIVE</span>
                 </div>
                 <div class="action-btn-group">
-                    <button class="btn btn-primary" onclick="injectTraffic('burst')">⚡ Inject 10G Burst</button>
-                    <button class="btn btn-secondary" onclick="injectTraffic('ddos')">🛡️ Test XDP DDoS Drop</button>
-                    <button class="btn btn-accent" onclick="injectTraffic('bufferbloat')">🌊 Test FQ-CoDel AQM</button>
+                    <button class="btn btn-primary" onclick="injectTraffic('burst')">Inject 10G Burst</button>
+                    <button class="btn btn-secondary" onclick="injectTraffic('ddos')">Test XDP DDoS Drop</button>
+                    <button class="btn btn-accent" onclick="injectTraffic('bufferbloat')">Test FQ-CoDel AQM</button>
                 </div>
             </div>
         </header>
@@ -47,21 +45,19 @@
             <div class="kpi-card">
                 <div class="kpi-header">
                     <span class="kpi-label">LINE-RATE THROUGHPUT</span>
-                    <span class="kpi-icon">📈</span>
                 </div>
                 <div class="kpi-value-row">
                     <span class="kpi-value" id="valThroughput">9.85</span>
                     <span class="kpi-unit">Gbps</span>
                 </div>
                 <div class="kpi-footer text-success">
-                    <span>↑ Zero-Copy DMA Line-Rate Saturated</span>
+                    <span>Zero-Copy DMA Line-Rate Saturated</span>
                 </div>
             </div>
 
             <div class="kpi-card">
                 <div class="kpi-header">
                     <span class="kpi-label">PACKET FORWARDING RATE</span>
-                    <span class="kpi-icon">⚡</span>
                 </div>
                 <div class="kpi-value-row">
                     <span class="kpi-value" id="valPPS">1,250,000</span>
@@ -75,21 +71,19 @@
             <div class="kpi-card">
                 <div class="kpi-header">
                     <span class="kpi-label">CORE FORWARDING LATENCY</span>
-                    <span class="kpi-icon">⏱️</span>
                 </div>
                 <div class="kpi-value-row">
                     <span class="kpi-value" id="valLatency">0.42</span>
-                    <span class="kpi-unit">μs</span>
+                    <span class="kpi-unit">us</span>
                 </div>
                 <div class="kpi-footer">
-                    <span>P90: <strong id="valP90">0.58 μs</strong> | P99: <strong id="valP99">0.74 μs</strong></span>
+                    <span>P90: <strong id="valP90">0.58 us</strong> | P99: <strong id="valP99">0.74 us</strong></span>
                 </div>
             </div>
 
             <div class="kpi-card" id="bbloatStatusCard">
                 <div class="kpi-header">
                     <span class="kpi-label">BUFFERBLOAT MITIGATION</span>
-                    <span class="kpi-icon">🛡️</span>
                 </div>
                 <div class="kpi-value-row">
                     <span class="kpi-value" id="valAQM">OPTIMAL</span>
@@ -116,7 +110,7 @@
             <!-- Telemetry Graph -->
             <div class="panel telemetry-chart-panel">
                 <div class="panel-head">
-                    <h2>Real-Time Throughput & Latency Jitter Telemetry</h2>
+                    <h2>Real-Time Throughput and Latency Jitter Telemetry</h2>
                     <span class="pill">Polling: 1000ms</span>
                 </div>
                 <div class="chart-box">
@@ -139,14 +133,14 @@
         <!-- Real-Time 5-Tuple Flows & Deep Packet Inspector -->
         <section class="panel flows-panel">
             <div class="panel-head">
-                <h2>Real-Time 5-Tuple Flows & Sub-Microsecond AI Traffic Classification</h2>
+                <h2>Real-Time 5-Tuple Flows and AI Traffic Classification</h2>
                 <span class="pill">Decision Matrix Inference & Conntrack</span>
             </div>
             <div class="table-wrapper">
                 <table class="data-table">
                     <thead>
                         <tr>
-                            <th>Flow 5-Tuple (Src ↔ Dst)</th>
+                            <th>Flow 5-Tuple (Src &lt;-&gt; Dst)</th>
                             <th>Protocol</th>
                             <th>ML Predicted Class</th>
                             <th>Confidence</th>
@@ -165,7 +159,7 @@
         <!-- Interactive Packet Hex-Dump Inspector -->
         <section class="panel inspector-panel">
             <div class="panel-head">
-                <h2>Live Packet Binary Dissector & Hex-Dump Inspector</h2>
+                <h2>Live Packet Binary Dissector and Hex-Dump Inspector</h2>
                 <span class="pill">Click a packet to inspect raw memory representation</span>
             </div>
             <div class="inspector-layout">
@@ -173,7 +167,7 @@
                     <!-- Rendered dynamically via JS -->
                 </div>
                 <div class="packet-details-card" id="packetDetailsCard">
-                    <div class="details-placeholder">Select a packet on the left to dissect headers and hex dump.</div>
+                    <div class="details-placeholder">Select a packet on the left to dissect headers and view the hex dump.</div>
                 </div>
             </div>
         </section>
@@ -189,7 +183,7 @@
                 <span class="tag-pill">FQ-CoDel AQM</span>
                 <span class="tag-pill">RSS 4-Tuple Hash</span>
             </div>
-            <p class="footer-copy">AetherPlane High-Performance Network Data Plane | Qualcomm & FAANG Architecture Standard</p>
+            <p class="footer-copy">AetherPlane High-Performance Network Data Plane</p>
         </footer>
     </div>
 
