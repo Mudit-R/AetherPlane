@@ -1,0 +1,173 @@
+%-------------------------
+% Resume in LaTeX
+% Tailored for: Qualcomm - Networking Data Path Software Engineer
+%------------------------
+
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+
+\pagestyle{fancy}
+\fancyhf{} % clear all header and footer fields
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Adjust margins
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-.5in}
+\addtolength{\textheight}{1.0in}
+
+\urlstyle{same}
+
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Sections formatting
+\titleformat{\section}{
+  \vspace{-4pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+
+%-------------------------
+% Custom commands
+\newcommand{\resumeItem}[1]{
+  \item\small{
+    {#1 \vspace{-2pt}}
+  }
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\listOfSkills}[2]{
+  \item\small{
+    \textbf{#1}{: #2} \vspace{-2pt}
+  }
+}
+
+\renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+%-------------------------------------------
+%%%%%%  RESUME STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+%----------HEADING----------
+\begin{center}
+    \textbf{\Huge \scshape Mudit} \\ \vspace{2pt}
+    \small +91-XXXXXXXXXX $|$ \href{mailto:your_email@domain.com}{\underline{your\_email@domain.com}} $|$ 
+    \href{https://linkedin.com/in/yourprofile}{\underline{linkedin.com/in/yourprofile}} $|$
+    \href{https://github.com/yourusername}{\underline{github.com/yourusername}}
+\end{center}
+
+%-----------EDUCATION-----------
+\section{Education}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {Dhirubhai Ambani University (DAU), formerly DA-IICT}{2023 -- 2027}
+      {B.Tech in Information and Communication Technology (ICT) $|$ \textbf{CPI: 8.02 / 10.0}}{Gandhinagar, Gujarat}
+  \resumeSubHeadingListEnd
+
+%-----------TECHNICAL SKILLS-----------
+\section{Technical Skills}
+  \begin{itemize}[leftmargin=0.15in, label={}]
+    \listOfSkills{Languages}{C, C++, Python, SQL, Java, JavaScript/TypeScript, Bash}
+    \listOfSkills{Networking \& Systems}{Linux Kernel Internals, TCP/IP, UDP, IPv4/IPv6, ARP/DHCP, Socket Programming, DPDK, eBPF/XDP, Netfilter, Device Drivers, Wireshark, GDB}
+    \listOfSkills{AI, ML \& Data Science}{PyTorch, GNN/GAT, NLP, LightGBM, XGBoost, scikit-learn, SentenceTransformers, SHAP, Optuna}
+    \listOfSkills{Cloud, DevOps \& Data}{GCP (Cloud Run, Pub/Sub, BigQuery), Feast, Docker, Git, Terraform (IaC), Kafka (CDC), Redis, PostgreSQL}
+    \listOfSkills{Core CS \& Fundamentals}{DSA, Computer Networks, Operating Systems, Distributed Systems, Low-Latency Data Paths, Concurrency, OOP, DBMS}
+  \end{itemize}
+
+%-----------EXPERIENCE-----------
+\section{Experience}
+  \resumeSubHeadingListStart
+
+    \resumeSubheading
+      {BillDesk}{Jul 2026 -- Aug 2026}
+      {Software Engineering Intern}{}
+      \vspace{3pt}
+      \resumeItemListStart
+        \resumeItem{Architected a fault-tolerant replication pipeline using \textbf{Spring Boot} and \textbf{Apache Kafka}, streaming \textbf{5M+ daily} CDC events with partitioned consumers and sub-150ms end-to-end latency.}
+        \resumeItem{Built a \textbf{dynamic SQL engine} with JSONPath evaluation for transactional multi-table fan-out, automating heterogeneous database sync to reduce manual migration effort by 85\%.}
+        \resumeItem{Containerized the multi-service test stack (Kafka, MySQL, MongoDB) via \textbf{Docker Compose} and built a \textbf{CI/CD pipeline}, automating end-to-end testing and cutting setup time by 70\%.}
+      \resumeItemListEnd
+
+    \resumeSubheading
+      {Dhirubhai Ambani University (DAU)}{May 2026 -- Jun 2026}
+      {Summer Research Intern}{Gandhinagar, Gujarat}
+      \vspace{3pt}
+      \resumeItemListStart
+        \resumeItem{Researched UPI inclusion patterns for informal workers, developing an alternative underwriting prototype with a \textbf{FastAPI} risk scoring engine and a \textbf{Web Speech API} voice ledger evaluated on 1,200+ merchant cohorts.}
+      \resumeItemListEnd
+
+  \resumeSubHeadingListEnd
+
+%-----------PROJECTS-----------
+\section{Projects}
+  \resumeSubHeadingListStart
+
+    \resumeSubheading
+      {OpenPath-X -- High-Performance Network Data Path \& Smart QoS Engine}{}
+      {C++, C, eBPF/XDP, DPDK, Linux Kernel, Netfilter, PyTorch, Wireshark, GDB}{}
+      \vspace{3pt}
+      \resumeItemListStart
+        \resumeItem{Engineered a zero-copy kernel-bypass packet forwarding engine in \textbf{C/C++} using \textbf{DPDK} and \textbf{eBPF/XDP}, achieving \textbf{10 Gbps line-rate forwarding} with a 65\% reduction in per-packet CPU overhead.}
+        \resumeItem{Developed custom \textbf{Linux virtual network device driver} hooks and \textbf{Netfilter} kernel modules to parse L2--L4 headers (\textbf{Ethernet, ARP, IPv4/IPv6, TCP, UDP}), implementing LPM trie routing lookups.}
+        \resumeItem{Implemented an \textbf{AI/ML-based smart traffic management} engine using lightweight inference to classify packet flows in real time, dynamically adjusting QoS priority queues to mitigate bufferbloat under congested wireless AP conditions.}
+        \resumeItem{Optimized low-level data structures using \textbf{zero-copy lock-free ring buffers (SPSC/MPMC)}, cache-line alignment, and \textbf{NUMA hugepages}, profiling bottleneck metrics via \textbf{Linux Perf}, \textbf{Valgrind}, and \textbf{Wireshark}.}
+      \resumeItemListEnd
+
+    \resumeSubheading
+      {Graph-Based Fraud \& Mule Account Detection}{}
+      {PyTorch Geometric, GNN/GCN/GAT, XGBoost, RAPIDS (cuGraph)}{}
+      \vspace{3pt}
+      \resumeItemListStart
+        \resumeItem{Constructed a transaction graph from \textbf{6.3M+ simulated payment records} (PaySim) and engineered graph-structural (PageRank, clustering coefficient, $k$-core) and temporal features to flag fraudulent accounts and mule rings.}
+        \resumeItem{Trained and benchmarked GCN, GraphSAGE, and GAT against an XGBoost baseline using time-based splits; a hybrid \textbf{GAT + XGBoost} stacking model reached \textbf{75.0\% Precision@100}, while standalone GAT hit \textbf{0.9129 ROC-AUC}.}
+        \resumeItem{Scaled GNN mini-batch training to \textbf{3.28M nodes} with PyTorch Geometric CUDA extensions and deployed a real-time FastAPI inference endpoint with PSI drift monitoring.}
+      \resumeItemListEnd
+
+    \resumeSubheading
+      {Real-Time IoT Telematics \& Predictive Maintenance Cloud Platform}{}
+      {GCP, BigQuery, FastAPI, LightGBM, Terraform}{}
+      \vspace{3pt}
+      \resumeItemListStart
+        \resumeItem{Built an end-to-end cloud telematics platform ingesting \textbf{10,000+ msg/s} of IMU and GPS sensor streams from 30+ fleet assets via \textbf{GCP Cloud Pub/Sub}.}
+        \resumeItem{Implemented a dual-tier Feast feature store with a BigQuery offline lakehouse and a low-latency cache, delivering \textbf{sub-3ms online feature lookups} at zero idle cost.}
+        \resumeItem{Engineered physics-calibrated signal pipelines to train Optuna-tuned LightGBM risk and RUL models, then deployed them as containerized FastAPI services on \textbf{GCP Cloud Run} via \textbf{Terraform IaC} with continuous drift monitoring.}
+      \resumeItemListEnd
+
+  \resumeSubHeadingListEnd
+
+%-----------LEADERSHIP & ACHIEVEMENTS-----------
+\section{Leadership \& Achievements}
+  \resumeSubHeadingListStart
+    \resumeItem{\textbf{Competitive Programming:} Solved \textbf{600+ questions} on LeetCode; achieved \textbf{Pupil rating on Codeforces}.}
+    \resumeItem{\textbf{Convener, The Debating Society of DAU (Jun 2025 -- Jun 2026):} Led and adjudicated inter-college debates; mentored and trained students in formal debate formats, structured argumentation, and public delivery.}
+  \resumeSubHeadingListEnd
+
+%-------------------------------------------
+\end{document}
