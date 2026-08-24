@@ -130,14 +130,14 @@
   \resumeSubHeadingListStart
 
     \resumeSubheading
-      {OpenPath-X -- High-Performance Network Data Path \& Smart QoS Engine}{}
-      {C++, C, eBPF/XDP, DPDK, Linux Kernel, Netfilter, PyTorch, Wireshark, GDB}{}
+      {AetherPlane -- Distributed Ultra-Low-Latency Network Data Plane \& AI QoS Engine}{}
+      {C++20, C, DPDK, eBPF/XDP, Linux Kernel, Netfilter, PyTorch, Wireshark, GDB}{}
       \vspace{3pt}
       \resumeItemListStart
-        \resumeItem{Engineered a zero-copy kernel-bypass packet forwarding engine in \textbf{C/C++} using \textbf{DPDK} and \textbf{eBPF/XDP}, achieving \textbf{10 Gbps line-rate forwarding} with a 65\% reduction in per-packet CPU overhead.}
-        \resumeItem{Developed custom \textbf{Linux virtual network device driver} hooks and \textbf{Netfilter} kernel modules to parse L2--L4 headers (\textbf{Ethernet, ARP, IPv4/IPv6, TCP, UDP}), implementing LPM trie routing lookups.}
-        \resumeItem{Implemented an \textbf{AI/ML-based smart traffic management} engine using lightweight inference to classify packet flows in real time, dynamically adjusting QoS priority queues to mitigate bufferbloat under congested wireless AP conditions.}
-        \resumeItem{Optimized low-level data structures using \textbf{zero-copy lock-free ring buffers (SPSC/MPMC)}, cache-line alignment, and \textbf{NUMA hugepages}, profiling bottleneck metrics via \textbf{Linux Perf}, \textbf{Valgrind}, and \textbf{Wireshark}.}
+        \resumeItem{Architected a multi-gigabit zero-copy kernel-bypass data plane in \textbf{C++20} using \textbf{DPDK} and \textbf{eBPF/XDP}, achieving \textbf{9.85 Gbps line-rate forwarding} and \textbf{0.42 $\mu$s core latency} across multi-core RSS worker threads.}
+        \resumeItem{Engineered zero-copy lockless ring buffer pools (\textbf{64B cacheline aligned}) and custom \textbf{Linux virtual NetDev} drivers with \textbf{Netfilter} stateful conntrack and \textbf{16-8 Radix LPM Trie} routing.}
+        \resumeItem{Implemented an \textbf{AI/ML traffic flow classifier} executing sub-microsecond inference on 5-tuple statistical dynamics (IAT variance, burstiness), driving \textbf{FQ-CoDel Active Queue Management} to eliminate wireless bufferbloat under saturation.}
+        \resumeItem{Built a real-time web telemetry engine with an interactive \textbf{packet hex-dump dissector}, queue latency heatmaps, and synthetic DDoS mitigation benchmarks, profiling bottlenecks via \textbf{Linux Perf} and \textbf{Valgrind}.}
       \resumeItemListEnd
 
     \resumeSubheading

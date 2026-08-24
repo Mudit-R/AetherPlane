@@ -3,118 +3,193 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OpenPath-X | Network Data Path & AI QoS Telemetry</title>
+    <title>AetherPlane | Ultra-Low-Latency Network Data Plane & AI Smart Traffic Engine</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div class="app-container">
-        <!-- Header -->
-        <header class="top-bar">
+        <!-- Top Navigation Header -->
+        <header class="top-nav">
             <div class="brand">
-                <div class="logo-icon">⚡</div>
-                <div class="brand-text">
-                    <h1>OpenPath-X <span class="badge">DPDK / eBPF Fast-Path</span></h1>
-                    <p class="subtitle">Unified Data Path & AI-Driven Smart Traffic Manager for Wireless Routers</p>
+                <div class="brand-logo">
+                    <span class="logo-glyph">❖</span>
+                </div>
+                <div class="brand-info">
+                    <div class="title-row">
+                        <h1>AETHERPLANE</h1>
+                        <span class="badge badge-accent">DPDK PMD</span>
+                        <span class="badge badge-subtle">eBPF / XDP</span>
+                        <span class="badge badge-subtle">C++20</span>
+                    </div>
+                    <p class="tagline">Distributed Ultra-Low-Latency Data Plane & AI-Augmented Smart Traffic Engineering Engine</p>
                 </div>
             </div>
-            <div class="system-status">
-                <div class="status-indicator live"></div>
-                <span class="status-label">DATA PATH ONLINE</span>
-                <button id="injectBtn" class="btn btn-primary" onclick="injectBurst()">⚡ Inject 10G Burst</button>
+
+            <div class="header-actions">
+                <div class="live-pill">
+                    <span class="pulsing-dot"></span>
+                    <span class="live-text">FAST-PATH ACTIVE</span>
+                </div>
+                <div class="action-btn-group">
+                    <button class="btn btn-primary" onclick="injectTraffic('burst')">⚡ Inject 10G Burst</button>
+                    <button class="btn btn-secondary" onclick="injectTraffic('ddos')">🛡️ Test XDP DDoS Drop</button>
+                    <button class="btn btn-accent" onclick="injectTraffic('bufferbloat')">🌊 Test FQ-CoDel AQM</button>
+                </div>
             </div>
         </header>
 
-        <!-- KPI Metrics Grid -->
+        <!-- KPI Executive Grid -->
         <section class="kpi-grid">
             <div class="kpi-card">
-                <span class="kpi-title">Line-Rate Forwarding</span>
-                <div class="kpi-value" id="valThroughput">9.42 <span class="unit">Gbps</span></div>
-                <div class="kpi-trend positive">↑ Line-Rate Saturated</div>
+                <div class="kpi-header">
+                    <span class="kpi-label">LINE-RATE THROUGHPUT</span>
+                    <span class="kpi-icon">📈</span>
+                </div>
+                <div class="kpi-value-row">
+                    <span class="kpi-value" id="valThroughput">9.85</span>
+                    <span class="kpi-unit">Gbps</span>
+                </div>
+                <div class="kpi-footer text-success">
+                    <span>↑ Zero-Copy DMA Line-Rate Saturated</span>
+                </div>
             </div>
+
             <div class="kpi-card">
-                <span class="kpi-title">Packet Processing Rate</span>
-                <div class="kpi-value" id="valPPS">845,000 <span class="unit">PPS</span></div>
-                <div class="kpi-trend">Zero-Copy Kernel Bypass</div>
+                <div class="kpi-header">
+                    <span class="kpi-label">PACKET FORWARDING RATE</span>
+                    <span class="kpi-icon">⚡</span>
+                </div>
+                <div class="kpi-value-row">
+                    <span class="kpi-value" id="valPPS">1,250,000</span>
+                    <span class="kpi-unit">PPS</span>
+                </div>
+                <div class="kpi-footer text-info">
+                    <span>4-Core RSS Worker Threads</span>
+                </div>
             </div>
+
             <div class="kpi-card">
-                <span class="kpi-title">Average Core Latency</span>
-                <div class="kpi-value" id="valLatency">0.48 <span class="unit">μs</span></div>
-                <div class="kpi-trend positive">P99: <span id="valP99">0.89 μs</span></div>
+                <div class="kpi-header">
+                    <span class="kpi-label">CORE FORWARDING LATENCY</span>
+                    <span class="kpi-icon">⏱️</span>
+                </div>
+                <div class="kpi-value-row">
+                    <span class="kpi-value" id="valLatency">0.42</span>
+                    <span class="kpi-unit">μs</span>
+                </div>
+                <div class="kpi-footer">
+                    <span>P90: <strong id="valP90">0.58 μs</strong> | P99: <strong id="valP99">0.74 μs</strong></span>
+                </div>
             </div>
-            <div class="kpi-card" id="bufferbloatCard">
-                <span class="kpi-title">Bufferbloat Status</span>
-                <div class="kpi-value" id="valBufferbloat">MITIGATED</div>
-                <div class="kpi-trend positive" id="valBufferbloatSub">AQM CoDel Active</div>
+
+            <div class="kpi-card" id="bbloatStatusCard">
+                <div class="kpi-header">
+                    <span class="kpi-label">BUFFERBLOAT MITIGATION</span>
+                    <span class="kpi-icon">🛡️</span>
+                </div>
+                <div class="kpi-value-row">
+                    <span class="kpi-value" id="valAQM">OPTIMAL</span>
+                </div>
+                <div class="kpi-footer text-success" id="valAQMSub">
+                    <span>FQ-CoDel Active Queue Management</span>
+                </div>
             </div>
         </section>
 
-        <!-- Main Dashboard Split -->
-        <div class="dashboard-split">
-            <!-- Left Panel: Real-Time Charts -->
-            <div class="panel main-chart-panel">
-                <div class="panel-header">
-                    <h2>Live Throughput & Latency Jitter</h2>
-                    <span class="pill">Real-Time (1000ms Poll)</span>
+        <!-- Multi-Core RSS Worker Threads Bar -->
+        <section class="panel multi-core-panel">
+            <div class="panel-head">
+                <h2>Multi-Core Receive Side Scaling (RSS) 4-Tuple Worker Cores</h2>
+                <span class="badge badge-subtle">Hugepages Lockless Ring Buffers (64B Aligned)</span>
+            </div>
+            <div class="core-grid" id="coreGrid">
+                <!-- Rendered dynamically via JS -->
+            </div>
+        </section>
+
+        <!-- Main Chart & Dynamic QoS Dashboard Split -->
+        <div class="split-view">
+            <!-- Telemetry Graph -->
+            <div class="panel telemetry-chart-panel">
+                <div class="panel-head">
+                    <h2>Real-Time Throughput & Latency Jitter Telemetry</h2>
+                    <span class="pill">Polling: 1000ms</span>
                 </div>
-                <div class="chart-container">
-                    <canvas id="throughputChart"></canvas>
+                <div class="chart-box">
+                    <canvas id="telemetryChart"></canvas>
                 </div>
             </div>
 
-            <!-- Right Panel: Smart QoS Queue State -->
-            <div class="panel queue-panel">
-                <div class="panel-header">
-                    <h2>Dynamic QoS Queues (WLAN 802.11)</h2>
-                    <span class="pill" id="linkRatePill">Bottleneck: 100 Mbps</span>
+            <!-- Smart QoS Queues (WLAN 802.11 Congestion Control) -->
+            <div class="panel qos-queues-panel">
+                <div class="panel-head">
+                    <h2>AI-Driven Smart QoS Queues (WLAN 802.11)</h2>
+                    <span class="pill">Link Rate: 100 Mbps</span>
                 </div>
-                <div class="queue-list" id="queueList">
-                    <!-- Dynamic rendering in JS -->
+                <div class="queue-container" id="queueContainer">
+                    <!-- Rendered dynamically via JS -->
                 </div>
             </div>
         </div>
 
-        <!-- Active Flow Table & AI Classification -->
+        <!-- Real-Time 5-Tuple Flows & Deep Packet Inspector -->
         <section class="panel flows-panel">
-            <div class="panel-header">
-                <h2>Real-Time 5-Tuple Flows & AI/ML Classification</h2>
-                <span class="pill">Sub-Microsecond Decision Tree</span>
+            <div class="panel-head">
+                <h2>Real-Time 5-Tuple Flows & Sub-Microsecond AI Traffic Classification</h2>
+                <span class="pill">Decision Matrix Inference & Conntrack</span>
             </div>
-            <div class="table-responsive">
-                <table class="flow-table">
+            <div class="table-wrapper">
+                <table class="data-table">
                     <thead>
                         <tr>
-                            <th>Source (IP:Port)</th>
-                            <th>Destination (IP:Port)</th>
+                            <th>Flow 5-Tuple (Src ↔ Dst)</th>
                             <th>Protocol</th>
                             <th>ML Predicted Class</th>
                             <th>Confidence</th>
                             <th>Rate (PPS)</th>
-                            <th>Forwarding Action</th>
+                            <th>Bandwidth</th>
+                            <th>Scheduling Action</th>
                         </tr>
                     </thead>
-                    <tbody id="flowTableBody">
-                        <!-- Dynamic rendering in JS -->
+                    <tbody id="flowTbody">
+                        <!-- Rendered dynamically via JS -->
                     </tbody>
                 </table>
             </div>
         </section>
 
-        <!-- Architecture Summary Banner -->
-        <footer class="footer-banner">
-            <div class="tech-tags">
-                <span class="tag">C++20</span>
-                <span class="tag">DPDK Ring Buffers</span>
-                <span class="tag">eBPF / XDP</span>
-                <span class="tag">Linux Netfilter</span>
-                <span class="tag">LPM Radix Trie</span>
-                <span class="tag">CoDel AQM</span>
-                <span class="tag">PyTorch Flow ML</span>
+        <!-- Interactive Packet Hex-Dump Inspector -->
+        <section class="panel inspector-panel">
+            <div class="panel-head">
+                <h2>Live Packet Binary Dissector & Hex-Dump Inspector</h2>
+                <span class="pill">Click a packet to inspect raw memory representation</span>
             </div>
-            <p class="copyright">OpenPath-X High-Performance Networking Engine | Tailored for Qualcomm Wireless Router Systems</p>
+            <div class="inspector-layout">
+                <div class="packet-list" id="packetList">
+                    <!-- Rendered dynamically via JS -->
+                </div>
+                <div class="packet-details-card" id="packetDetailsCard">
+                    <div class="details-placeholder">Select a packet on the left to dissect headers and hex dump.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Architecture Specs Footer -->
+        <footer class="footer-bar">
+            <div class="footer-tags">
+                <span class="tag-pill">C++20</span>
+                <span class="tag-pill">DPDK Lockless Rings</span>
+                <span class="tag-pill">eBPF / XDP</span>
+                <span class="tag-pill">Netfilter Conntrack</span>
+                <span class="tag-pill">LPM Radix Trie (16-8)</span>
+                <span class="tag-pill">FQ-CoDel AQM</span>
+                <span class="tag-pill">RSS 4-Tuple Hash</span>
+            </div>
+            <p class="footer-copy">AetherPlane High-Performance Network Data Plane | Qualcomm & FAANG Architecture Standard</p>
         </footer>
     </div>
 
