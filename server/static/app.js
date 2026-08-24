@@ -106,21 +106,21 @@ function initTelemetryChart() {
                 {
                     label: 'Throughput (Gbps)',
                     data: chartSeries.throughput,
-                    borderColor: '#38bdf8',
-                    backgroundColor: 'rgba(56, 189, 248, 0.12)',
+                    borderColor: '#0f172a',
+                    backgroundColor: 'rgba(253, 224, 71, 0.4)',
                     borderWidth: 2.5,
-                    tension: 0.35,
+                    tension: 0.1,
                     fill: true,
                     yAxisID: 'y'
                 },
                 {
                     label: 'Mean Latency (us)',
                     data: chartSeries.latency,
-                    borderColor: '#a855f7',
+                    borderColor: '#f97316',
                     backgroundColor: 'transparent',
-                    borderWidth: 2,
-                    borderDash: [4, 4],
-                    tension: 0.35,
+                    borderWidth: 2.5,
+                    borderDash: [5, 5],
+                    tension: 0.1,
                     yAxisID: 'y1'
                 }
             ]
@@ -128,18 +128,18 @@ function initTelemetryChart() {
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            animation: { duration: 400 },
+            animation: { duration: 300 },
             scales: {
                 x: {
-                    grid: { color: 'rgba(255, 255, 255, 0.04)' },
-                    ticks: { color: '#64748b', font: { family: 'JetBrains Mono', size: 10 } }
+                    grid: { color: '#e2e8f0', lineWidth: 1 },
+                    ticks: { color: '#0f172a', font: { family: 'JetBrains Mono', weight: 'bold', size: 10 } }
                 },
                 y: {
                     type: 'linear',
                     position: 'left',
-                    grid: { color: 'rgba(255, 255, 255, 0.04)' },
-                    ticks: { color: '#38bdf8', font: { family: 'JetBrains Mono' } },
-                    title: { display: true, text: 'Throughput (Gbps)', color: '#38bdf8', font: { family: 'Inter', weight: 'bold' } },
+                    grid: { color: '#e2e8f0', lineWidth: 1 },
+                    ticks: { color: '#0f172a', font: { family: 'JetBrains Mono', weight: 'bold' } },
+                    title: { display: true, text: 'Throughput (Gbps)', color: '#0f172a', font: { family: 'JetBrains Mono', weight: 'bold' } },
                     min: 0,
                     max: 12
                 },
@@ -147,15 +147,15 @@ function initTelemetryChart() {
                     type: 'linear',
                     position: 'right',
                     grid: { drawOnChartArea: false },
-                    ticks: { color: '#c084fc', font: { family: 'JetBrains Mono' } },
-                    title: { display: true, text: 'Latency (us)', color: '#c084fc', font: { family: 'Inter', weight: 'bold' } },
+                    ticks: { color: '#f97316', font: { family: 'JetBrains Mono', weight: 'bold' } },
+                    title: { display: true, text: 'Latency (us)', color: '#f97316', font: { family: 'JetBrains Mono', weight: 'bold' } },
                     min: 0,
                     max: 2.0
                 }
             },
             plugins: {
                 legend: {
-                    labels: { color: '#f8fafc', font: { family: 'Inter', size: 12 } }
+                    labels: { color: '#0f172a', font: { family: 'JetBrains Mono', weight: 'bold', size: 11 } }
                 }
             }
         }
@@ -169,7 +169,6 @@ async function fetchTelemetry() {
         const data = await res.json();
         renderTelemetry(data);
     } catch (e) {
-        // Fallback simulation for GitHub Pages static hosting
         simulateClientTick();
         renderTelemetry(clientSimState);
     }
@@ -214,14 +213,14 @@ function renderTelemetry(data) {
     const aqmSub = document.getElementById('valAQMSub');
     if (data.bufferbloat) {
         aqmVal.textContent = 'HIGH JITTER (ACTIVE AQM)';
-        aqmVal.className = 'kpi-value text-danger';
+        aqmVal.className = 'kpi-value text-alert';
         aqmSub.textContent = 'CoDel Dropping Bulk Tail Packets to Preserve Latency';
-        aqmSub.className = 'kpi-footer text-danger';
+        aqmSub.className = 'kpi-footer text-alert';
     } else {
-        aqmVal.textContent = 'OPTIMAL (MITIGATED)';
-        aqmVal.className = 'kpi-value text-success';
+        aqmVal.textContent = 'OPTIMAL';
+        aqmVal.className = 'kpi-value text-ok';
         aqmSub.textContent = 'FQ-CoDel Active Queue Management Active';
-        aqmSub.className = 'kpi-footer text-success';
+        aqmSub.className = 'kpi-footer text-ok';
     }
 
     // 2. Multi-Core RSS Worker Threads
@@ -288,12 +287,12 @@ function renderTelemetry(data) {
         return `
             <tr>
                 <td><strong>${f.src}</strong> &lt;-&gt; <strong>${f.dst}</strong></td>
-                <td><span class="tag-badge badge-subtle">${f.proto}</span></td>
+                <td><span class="tag-badge">${f.proto}</span></td>
                 <td><span class="tag-badge ${tagClass}">${f.class}</span></td>
                 <td>${(f.confidence * 100).toFixed(0)}%</td>
                 <td>${f.pps.toLocaleString()}</td>
                 <td>${f.bandwidth_mbps} Mbps</td>
-                <td><strong style="color: #38bdf8;">${f.action}</strong></td>
+                <td><strong style="color: #0f172a;">${f.action}</strong></td>
             </tr>
         `;
     }).join('');
@@ -333,10 +332,10 @@ function selectPacket(id) {
             <div><strong>• L2 Frame:</strong> Ethernet II (Type: 0x0800 IPv4) | Checksum: VALID</div>
             <div><strong>• L3 Network:</strong> IPv4 (TTL: 64, IHL: 20B) | Src: ${pkt.src.split(':')[0]} -&gt; Dst: ${pkt.dst.split(':')[0]}</div>
             <div><strong>• L4 Transport:</strong> ${pkt.protocol} (Ports: ${pkt.src.split(':')[1]} -&gt; ${pkt.dst.split(':')[1]})</div>
-            <div><strong>• AI Classification:</strong> <span class="tag-badge tag-gaming">${pkt.traffic_class}</span></div>
-            <div><strong>• Payload Preview:</strong> <span style="color: #34d399;">"${pkt.payload_preview}"</span></div>
+            <div><strong>• Flow Classification:</strong> <span class="tag-badge tag-gaming">${pkt.traffic_class}</span></div>
+            <div><strong>• Payload Preview:</strong> <span>"${pkt.payload_preview}"</span></div>
         </div>
-        <div style="font-size: 11px; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">RAW BINARY HEX DUMP (Zero-Copy Ring Buffer Slice):</div>
+        <div style="font-size: 11px; font-weight: 800; color: #475569; margin-bottom: 6px;">RAW BINARY HEX DUMP (Zero-Copy Ring Buffer Slice):</div>
         <div class="hex-box">${pkt.hex_dump}</div>
     `;
 }
@@ -350,21 +349,19 @@ async function injectTraffic(type) {
             fetchTelemetry();
             return;
         }
-    } catch (e) {
-        // Fallback for static GitHub Pages hosting
-    }
+    } catch (e) {}
 
     if (type === 'burst') {
         clientSimState.gbps = 10.0;
         clientSimState.pps = 1450000;
         clientSimState.queues.forEach(q => q.occupancy = Math.min(q.max, q.occupancy + 25));
-        alert('Simulation Triggered: 10Gbps Line-Rate Burst Injected');
+        alert('Simulation: 10Gbps Line-Rate Burst Injected');
     } else if (type === 'ddos') {
-        alert('Simulation Triggered: SYN Flood Mitigated by eBPF/XDP Fast-Path Hook (0% CPU impact)');
+        alert('Simulation: SYN Flood Mitigated by eBPF/XDP Fast-Path Hook (0% CPU impact)');
     } else if (type === 'bufferbloat') {
         clientSimState.queues[4].occupancy = 240;
         clientSimState.bufferbloat = true;
-        alert('Simulation Triggered: Bottleneck Link Saturated - FQ-CoDel Coordinated Drops Active');
+        alert('Simulation: Bottleneck Link Saturated - FQ-CoDel Coordinated Drops Active');
     }
     renderTelemetry(clientSimState);
 }
