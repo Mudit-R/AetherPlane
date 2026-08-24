@@ -1,0 +1,42 @@
+name: OpenPath-X CI Pipeline
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Set up GCC 13
+      uses: egor-tensin/setup-gcc@v1
+      with:
+        version: 13
+        platform: x64
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Compile C++ Data Path Core
+      run: |
+        make all
+
+    - name: Run Automated Test Suite
+      run: |
+        python3 tests/test_data_path.py
+
+    - name: Train ML Traffic Classifier
+      run: |
+        python3 ml/train_qos_model.py
+
+    - name: Run Line-Rate Benchmarks
+      run: |
+        python3 benchmarks/benchmark_runner.py

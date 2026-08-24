@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenPath-X | Network Data Path & AI QoS Telemetry</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="top-bar">
+            <div class="brand">
+                <div class="logo-icon">⚡</div>
+                <div class="brand-text">
+                    <h1>OpenPath-X <span class="badge">DPDK / eBPF Fast-Path</span></h1>
+                    <p class="subtitle">Unified Data Path & AI-Driven Smart Traffic Manager for Wireless Routers</p>
+                </div>
+            </div>
+            <div class="system-status">
+                <div class="status-indicator live"></div>
+                <span class="status-label">DATA PATH ONLINE</span>
+                <button id="injectBtn" class="btn btn-primary" onclick="injectBurst()">⚡ Inject 10G Burst</button>
+            </div>
+        </header>
+
+        <!-- KPI Metrics Grid -->
+        <section class="kpi-grid">
+            <div class="kpi-card">
+                <span class="kpi-title">Line-Rate Forwarding</span>
+                <div class="kpi-value" id="valThroughput">9.42 <span class="unit">Gbps</span></div>
+                <div class="kpi-trend positive">↑ Line-Rate Saturated</div>
+            </div>
+            <div class="kpi-card">
+                <span class="kpi-title">Packet Processing Rate</span>
+                <div class="kpi-value" id="valPPS">845,000 <span class="unit">PPS</span></div>
+                <div class="kpi-trend">Zero-Copy Kernel Bypass</div>
+            </div>
+            <div class="kpi-card">
+                <span class="kpi-title">Average Core Latency</span>
+                <div class="kpi-value" id="valLatency">0.48 <span class="unit">μs</span></div>
+                <div class="kpi-trend positive">P99: <span id="valP99">0.89 μs</span></div>
+            </div>
+            <div class="kpi-card" id="bufferbloatCard">
+                <span class="kpi-title">Bufferbloat Status</span>
+                <div class="kpi-value" id="valBufferbloat">MITIGATED</div>
+                <div class="kpi-trend positive" id="valBufferbloatSub">AQM CoDel Active</div>
+            </div>
+        </section>
+
+        <!-- Main Dashboard Split -->
+        <div class="dashboard-split">
+            <!-- Left Panel: Real-Time Charts -->
+            <div class="panel main-chart-panel">
+                <div class="panel-header">
+                    <h2>Live Throughput & Latency Jitter</h2>
+                    <span class="pill">Real-Time (1000ms Poll)</span>
+                </div>
+                <div class="chart-container">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Right Panel: Smart QoS Queue State -->
+            <div class="panel queue-panel">
+                <div class="panel-header">
+                    <h2>Dynamic QoS Queues (WLAN 802.11)</h2>
+                    <span class="pill" id="linkRatePill">Bottleneck: 100 Mbps</span>
+                </div>
+                <div class="queue-list" id="queueList">
+                    <!-- Dynamic rendering in JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Active Flow Table & AI Classification -->
+        <section class="panel flows-panel">
+            <div class="panel-header">
+                <h2>Real-Time 5-Tuple Flows & AI/ML Classification</h2>
+                <span class="pill">Sub-Microsecond Decision Tree</span>
+            </div>
+            <div class="table-responsive">
+                <table class="flow-table">
+                    <thead>
+                        <tr>
+                            <th>Source (IP:Port)</th>
+                            <th>Destination (IP:Port)</th>
+                            <th>Protocol</th>
+                            <th>ML Predicted Class</th>
+                            <th>Confidence</th>
+                            <th>Rate (PPS)</th>
+                            <th>Forwarding Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="flowTableBody">
+                        <!-- Dynamic rendering in JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Architecture Summary Banner -->
+        <footer class="footer-banner">
+            <div class="tech-tags">
+                <span class="tag">C++20</span>
+                <span class="tag">DPDK Ring Buffers</span>
+                <span class="tag">eBPF / XDP</span>
+                <span class="tag">Linux Netfilter</span>
+                <span class="tag">LPM Radix Trie</span>
+                <span class="tag">CoDel AQM</span>
+                <span class="tag">PyTorch Flow ML</span>
+            </div>
+            <p class="copyright">OpenPath-X High-Performance Networking Engine | Tailored for Qualcomm Wireless Router Systems</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

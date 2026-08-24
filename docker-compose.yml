@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  openpath-engine:
+    build: .
+    container_name: openpath_data_path
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+    environment:
+      - LINK_RATE_MBPS=100.0
+      - LOG_LEVEL=INFO
