@@ -1,9 +1,9 @@
 version: '3.8'
 
 services:
-  openpath-engine:
+  aetherplane-engine:
     build: .
-    container_name: openpath_data_path
+    container_name: aetherplane_data_plane
     ports:
       - "8080:8080"
     restart: unless-stopped

@@ -28,7 +28,7 @@ int main(int argc, char* argv[]) {
     std::signal(SIGTERM, signal_handler);
 
     std::cout << "=========================================================\n";
-    std::cout << "  OpenPath-X: High-Performance Network Data Path Engine   \n";
+    std::cout << "  AetherPlane: High-Performance Network Data Path Engine  \n";
     std::cout << "  Tailored for Wireless Access Point Routers (DPDK/eBPF)  \n";
     std::cout << "=========================================================\n\n";
 

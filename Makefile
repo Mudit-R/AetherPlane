@@ -2,7 +2,7 @@ CXX ?= g++
 CXXFLAGS ?= -std=c++20 -O3 -Wall -Wextra -Iinclude -pthread
 
 BUILD_DIR = build
-BIN = $(BUILD_DIR)/openpath_daemon
+BIN = $(BUILD_DIR)/aetherplane_daemon
 
 SRCS = src/core/packet.cpp \
        src/core/lpm_trie.cpp \

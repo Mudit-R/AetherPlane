@@ -12,7 +12,7 @@ RUN make all
 FROM python:3.11-slim
 
 WORKDIR /app
-COPY --from=builder /app/build/openpath_daemon /app/openpath_daemon
+COPY --from=builder /app/build/aetherplane_daemon /app/aetherplane_daemon
 COPY server/ ./server/
 COPY ml/ ./ml/
 COPY tests/ ./tests/

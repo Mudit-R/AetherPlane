@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Automated Test Suite for OpenPath-X Network Data Path Engine
+Automated Test Suite for AetherPlane Network Data Plane Engine
 Tests:
 - L2-L4 Packet Parsing (Ethernet, ARP, IPv4, TCP, UDP)
 - LPM Radix Trie Lookups (Longest Prefix Match)
@@ -14,14 +14,14 @@ import unittest
 import struct
 import socket
 
-class TestOpenPathDataPath(unittest.TestCase):
+class TestAetherPlaneDataPath(unittest.TestCase):
 
     def test_l2_l4_packet_header_structure(self):
         """Validates binary alignment and header packing for Ethernet + IPv4 + UDP."""
         eth_hdr = struct.pack("!6s6sH", b"\x00\x1a\x2b\x3c\x4d\x5e", b"\x00\x11\x22\x33\x44\x55", 0x0800)
         ip_hdr = struct.pack("!BBHHHBBH4s4s", 0x45, 0, 48, 1234, 0, 64, 17, 0, socket.inet_aton("192.168.1.100"), socket.inet_aton("10.0.0.1"))
         udp_hdr = struct.pack("!HHHH", 5000, 80, 28, 0)
-        payload = b"TEST_OPENPATH_PACKET"
+        payload = b"TEST_AETHERPLANE_PACKET"
         
         raw_packet = eth_hdr + ip_hdr + udp_hdr + payload
         

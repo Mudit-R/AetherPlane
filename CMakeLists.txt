@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.20)
-project(OpenPathX VERSION 1.0.0 LANGUAGES CXX)
+project(AetherPlane VERSION 1.0.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -21,18 +21,19 @@ set(SOURCES
     src/core/filter_engine.cpp
     src/core/xdp_hook.cpp
     src/core/virtual_netdev.cpp
+    src/core/rss_dispatcher.cpp
     src/qos/flow_classifier.cpp
     src/qos/smart_scheduler.cpp
     src/telemetry/metrics_collector.cpp
 )
 
 # Core library
-add_library(openpath_core STATIC ${SOURCES})
+add_library(aetherplane_core STATIC ${SOURCES})
 
 # Main executable
-add_executable(openpath_daemon src/main.cpp)
-target_link_libraries(openpath_daemon PRIVATE openpath_core)
+add_executable(aetherplane_daemon src/main.cpp)
+target_link_libraries(aetherplane_daemon PRIVATE aetherplane_core)
 
 if (WIN32)
-    target_link_libraries(openpath_daemon PRIVATE ws2_32)
+    target_link_libraries(aetherplane_daemon PRIVATE ws2_32)
 endif()

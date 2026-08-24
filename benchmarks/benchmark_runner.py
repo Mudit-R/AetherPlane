@@ -20,7 +20,7 @@ if hasattr(sys.stdout, 'reconfigure'):
 
 def run_synthetic_benchmark(total_packets=500000):
     print("=================================================================")
-    print("  OpenPath-X High-Throughput Data Path Performance Benchmark     ")
+    print("  AetherPlane High-Throughput Data Plane Performance Benchmark   ")
     print("=================================================================")
     print(f"[*] Injecting {total_packets:,} synthetic packets across 5 traffic classes...")
     
