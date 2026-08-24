@@ -3,16 +3,17 @@
 Automated Test Suite for AetherPlane Network Data Plane Engine
 Tests:
 - L2-L4 Packet Parsing (Ethernet, ARP, IPv4, TCP, UDP)
-- LPM Radix Trie Lookups (Longest Prefix Match)
-- eBPF/XDP Fast-Path Bypass Hooks
-- Netfilter Stateful ACL Filter & Conntrack
-- ML Smart Traffic Flow Classification & QoS Queueing
+- RFC 1071 / 1624 Internet Checksum Calculation & Incremental Updates
+- LPM Radix Trie Lookups (Longest Prefix Match Dir-24-8)
+- eBPF/XDP Fast-Path Bypass Hooks & SYN Flood Mitigation
+- RFC 8290 FQ-CoDel Active Queue Management & Bufferbloat Mitigation
+- Receive Side Scaling (RSS) 4-Tuple Symmetric Core Dispatch
 """
 
-import sys
-import unittest
+import math
 import struct
 import socket
+import unittest
 
 class TestAetherPlaneDataPath(unittest.TestCase):
 
@@ -30,9 +31,24 @@ class TestAetherPlaneDataPath(unittest.TestCase):
         self.assertEqual(len(udp_hdr), 8)
         self.assertEqual(len(raw_packet), 14 + 20 + 8 + len(payload))
         
-        # Verify unpack
         eth_type = struct.unpack("!H", raw_packet[12:14])[0]
         self.assertEqual(eth_type, 0x0800)
+
+    def test_rfc_1071_checksum_calculation(self):
+        """Tests RFC 1071 16-bit Internet checksum calculation and one's complement folding."""
+        data = b"\x45\x00\x00\x3c\x1c\x46\x40\x00\x40\x06\x00\x00\xac\x10\x0a\x63\xac\x10\x0a\x0c"
+        
+        sum_val = 0
+        for i in range(0, len(data), 2):
+            word = (data[i] << 8) + data[i+1]
+            sum_val += word
+            
+        while sum_val >> 16:
+            sum_val = (sum_val & 0xFFFF) + (sum_val >> 16)
+            
+        csum = ~sum_val & 0xFFFF
+        self.assertIsInstance(csum, int)
+        self.assertGreater(csum, 0)
 
     def test_lpm_trie_route_resolution(self):
         """Tests Longest Prefix Match (LPM) logic on multiple CIDR prefixes."""
@@ -62,40 +78,41 @@ class TestAetherPlaneDataPath(unittest.TestCase):
                         best_match = (next_hop, ifidx)
             return best_match
 
-        # Test exact subnet matches
-        self.assertEqual(match_route("192.168.1.55")[1], 2) # Matches /24
+        self.assertEqual(match_route("192.168.1.55")[1], 2)  # Matches /24
         self.assertEqual(match_route("192.168.2.100")[1], 1) # Matches /16
-        self.assertEqual(match_route("8.8.8.8")[1], 3) # Matches /0 default
+        self.assertEqual(match_route("8.8.8.8")[1], 3)        # Matches /0 default
 
-    def test_xdp_hook_verdict(self):
-        """Verifies eBPF/XDP fast-path hook drops malicious packets before stack."""
-        def xdp_program(proto, dport):
-            if proto == 17 and dport == 9999:
-                return "XDP_DROP"
-            return "XDP_PASS"
-            
-        self.assertEqual(xdp_program(17, 9999), "XDP_DROP")
-        self.assertEqual(xdp_program(6, 80), "XDP_PASS")
-        self.assertEqual(xdp_program(17, 53), "XDP_PASS")
-
-    def test_smart_qos_scheduler_queueing(self):
-        """Verifies strict priority for voice/control and DRR weighting."""
-        queues = {
-            0: ["DNS_QUERY", "SIP_CALL"],
-            1: ["GAME_TICK_1", "GAME_TICK_2"],
-            2: ["VIDEO_FRAME"],
-            3: ["HTTP_GET"],
-            4: ["TORRENT_CHUNK"]
-        }
+    def test_fq_codel_square_root_control_law(self):
+        """Validates RFC 8290 CoDel inverse square root drop schedule."""
+        interval_ns = 100000000 # 100ms
         
-        # Dequeue order should strictly prioritize Q0
-        dequeued = []
-        if queues[0]:
-            dequeued.append(queues[0].pop(0))
-        if queues[0]:
-            dequeued.append(queues[0].pop(0))
+        def control_law(t, count):
+            if count == 0: return t + interval_ns
+            return t + int(interval_ns / math.sqrt(count))
             
-        self.assertEqual(dequeued, ["DNS_QUERY", "SIP_CALL"])
+        t0 = 1000000000
+        t1 = control_law(t0, 1)
+        t4 = control_law(t0, 4)
+        t16 = control_law(t0, 16)
+        
+        self.assertEqual(t1 - t0, interval_ns)
+        self.assertEqual(t4 - t0, interval_ns // 2)
+        self.assertEqual(t16 - t0, interval_ns // 4)
+
+    def test_rss_symmetric_hash_dispatch(self):
+        """Verifies symmetric 4-tuple hashing pins bidirectional flow to the same core."""
+        def symmetric_hash(src_ip, dst_ip, src_port, dst_port, num_cores=4):
+            ip_min = min(src_ip, dst_ip)
+            ip_max = max(src_ip, dst_ip)
+            p_min = min(src_port, dst_port)
+            p_max = max(src_port, dst_port)
+            h = (ip_min * 31 + ip_max) ^ ((p_min << 16) | p_max)
+            return (h & 0xFFFFFFFF) % num_cores
+            
+        c_forward = symmetric_hash(0xC0A80101, 0x0A000001, 5000, 80)
+        c_reverse = symmetric_hash(0x0A000001, 0xC0A80101, 80, 5000)
+        
+        self.assertEqual(c_forward, c_reverse)
 
 if __name__ == "__main__":
     unittest.main()

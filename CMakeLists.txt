@@ -22,8 +22,12 @@ set(SOURCES
     src/core/xdp_hook.cpp
     src/core/virtual_netdev.cpp
     src/core/rss_dispatcher.cpp
+    src/core/checksum.cpp
+    src/core/xsk_umem.cpp
+    src/core/worker_pool.cpp
     src/qos/flow_classifier.cpp
     src/qos/smart_scheduler.cpp
+    src/qos/fq_codel.cpp
     src/telemetry/metrics_collector.cpp
 )
 
