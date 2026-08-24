@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AetherPlane | High-Performance Network Data Plane & AI Traffic Engine</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Top Navigation Header -->
+        <header class="top-nav">
+            <div class="brand">
+                <div class="brand-logo">AP</div>
+                <div class="brand-info">
+                    <div class="title-row">
+                        <h1>AETHERPLANE</h1>
+                        <span class="badge badge-accent">DPDK PMD</span>
+                        <span class="badge badge-subtle">eBPF / XDP</span>
+                        <span class="badge badge-subtle">C++20</span>
+                    </div>
+                    <p class="tagline">Distributed Low-Latency Data Plane and Smart Traffic Engineering Engine</p>
+                </div>
+            </div>
+
+            <div class="header-actions">
+                <div class="live-pill">
+                    <span class="pulsing-dot"></span>
+                    <span class="live-text">FAST-PATH ACTIVE</span>
+                </div>
+                <div class="action-btn-group">
+                    <button class="btn btn-primary" onclick="injectTraffic('burst')">Inject 10G Burst</button>
+                    <button class="btn btn-secondary" onclick="injectTraffic('ddos')">Test XDP DDoS Drop</button>
+                    <button class="btn btn-accent" onclick="injectTraffic('bufferbloat')">Test FQ-CoDel AQM</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- KPI Executive Grid -->
+        <section class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-header">
+                    <span class="kpi-label">LINE-RATE THROUGHPUT</span>
+                </div>
+                <div class="kpi-value-row">
+                    <span class="kpi-value" id="valThroughput">9.85</span>
+                    <span class="kpi-unit">Gbps</span>
+                </div>
+                <div class="kpi-footer text-success">
+                    <span>Zero-Copy DMA Line-Rate Saturated</span>
+                </div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-header">
+                    <span class="kpi-label">PACKET FORWARDING RATE</span>
+                </div>
+                <div class="kpi-value-row">
+                    <span class="kpi-value" id="valPPS">1,250,000</span>
+                    <span class="kpi-unit">PPS</span>
+                </div>
+                <div class="kpi-footer text-info">
+                    <span>4-Core RSS Worker Threads</span>
+                </div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-header">
+                    <span class="kpi-label">CORE FORWARDING LATENCY</span>
+                </div>
+                <div class="kpi-value-row">
+                    <span class="kpi-value" id="valLatency">0.42</span>
+                    <span class="kpi-unit">us</span>
+                </div>
+                <div class="kpi-footer">
+                    <span>P90: <strong id="valP90">0.58 us</strong> | P99: <strong id="valP99">0.74 us</strong></span>
+                </div>
+            </div>
+
+            <div class="kpi-card" id="bbloatStatusCard">
+                <div class="kpi-header">
+                    <span class="kpi-label">BUFFERBLOAT MITIGATION</span>
+                </div>
+                <div class="kpi-value-row">
+                    <span class="kpi-value" id="valAQM">OPTIMAL</span>
+                </div>
+                <div class="kpi-footer text-success" id="valAQMSub">
+                    <span>FQ-CoDel Active Queue Management</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Multi-Core RSS Worker Threads Bar -->
+        <section class="panel multi-core-panel">
+            <div class="panel-head">
+                <h2>Multi-Core Receive Side Scaling (RSS) 4-Tuple Worker Cores</h2>
+                <span class="badge badge-subtle">Hugepages Lockless Ring Buffers (64B Aligned)</span>
+            </div>
+            <div class="core-grid" id="coreGrid">
+                <!-- Rendered dynamically via JS -->
+            </div>
+        </section>
+
+        <!-- Main Chart & Dynamic QoS Dashboard Split -->
+        <div class="split-view">
+            <!-- Telemetry Graph -->
+            <div class="panel telemetry-chart-panel">
+                <div class="panel-head">
+                    <h2>Real-Time Throughput and Latency Jitter Telemetry</h2>
+                    <span class="pill">Polling: 1000ms</span>
+                </div>
+                <div class="chart-box">
+                    <canvas id="telemetryChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Smart QoS Queues (WLAN 802.11 Congestion Control) -->
+            <div class="panel qos-queues-panel">
+                <div class="panel-head">
+                    <h2>AI-Driven Smart QoS Queues (WLAN 802.11)</h2>
+                    <span class="pill">Link Rate: 100 Mbps</span>
+                </div>
+                <div class="queue-container" id="queueContainer">
+                    <!-- Rendered dynamically via JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Real-Time 5-Tuple Flows & Deep Packet Inspector -->
+        <section class="panel flows-panel">
+            <div class="panel-head">
+                <h2>Real-Time 5-Tuple Flows and AI Traffic Classification</h2>
+                <span class="pill">Decision Matrix Inference & Conntrack</span>
+            </div>
+            <div class="table-wrapper">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Flow 5-Tuple (Src &lt;-&gt; Dst)</th>
+                            <th>Protocol</th>
+                            <th>ML Predicted Class</th>
+                            <th>Confidence</th>
+                            <th>Rate (PPS)</th>
+                            <th>Bandwidth</th>
+                            <th>Scheduling Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="flowTbody">
+                        <!-- Rendered dynamically via JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Interactive Packet Hex-Dump Inspector -->
+        <section class="panel inspector-panel">
+            <div class="panel-head">
+                <h2>Live Packet Binary Dissector and Hex-Dump Inspector</h2>
+                <span class="pill">Click a packet to inspect raw memory representation</span>
+            </div>
+            <div class="inspector-layout">
+                <div class="packet-list" id="packetList">
+                    <!-- Rendered dynamically via JS -->
+                </div>
+                <div class="packet-details-card" id="packetDetailsCard">
+                    <div class="details-placeholder">Select a packet on the left to dissect headers and view the hex dump.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Architecture Specs Footer -->
+        <footer class="footer-bar">
+            <div class="footer-tags">
+                <span class="tag-pill">C++20</span>
+                <span class="tag-pill">DPDK Lockless Rings</span>
+                <span class="tag-pill">eBPF / XDP</span>
+                <span class="tag-pill">Netfilter Conntrack</span>
+                <span class="tag-pill">LPM Radix Trie (16-8)</span>
+                <span class="tag-pill">FQ-CoDel AQM</span>
+                <span class="tag-pill">RSS 4-Tuple Hash</span>
+            </div>
+            <p class="footer-copy">AetherPlane High-Performance Network Data Plane</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
