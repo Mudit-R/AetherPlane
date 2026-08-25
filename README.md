@@ -1,10 +1,17 @@
 # AetherPlane
 
+[![Live Interactive Dashboard](https://img.shields.io/badge/Live%20Demo-Interactive%20Dashboard-00d2ff?style=for-the-badge&logo=googlechrome&logoColor=white)](https://mudit-r.github.io/AetherPlane/)
+[![GitHub Pages](https://img.shields.io/badge/Deploy%20Status-GitHub%20Pages-22c55e?style=for-the-badge&logo=github)](https://mudit-r.github.io/AetherPlane/)
+[![CI Pipeline](https://img.shields.io/github/actions/workflow/status/Mudit-R/AetherPlane/ci.yml?branch=main&label=CI%20Pipeline&style=for-the-badge)](https://github.com/Mudit-R/AetherPlane/actions)
+[![Language](https://img.shields.io/badge/Language-C%2B%2B20-00599C?style=for-the-badge&logo=c%2B%2B)](https://en.cppreference.com/w/cpp/20)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FMudit-R%2FAetherPlane)
+
+> 🚀 **Live Interactive Web Dashboard:** [https://mudit-r.github.io/AetherPlane/](https://mudit-r.github.io/AetherPlane/)
+
 AetherPlane is a low-latency, zero-copy network data plane and traffic engineering engine built with modern C++ (C++20), designed for high-throughput packet processing on Linux systems and wireless access point routers.
 
 It combines kernel-bypass packet forwarding concepts (DPDK, eBPF/XDP) with a statistical traffic classification engine and Active Queue Management (AQM via FQ-CoDel) to eliminate bufferbloat and guarantee bounded latencies for real-time traffic under heavy network load.
-
-**Live Interactive Dashboard:** [https://mudit-r.github.io/AetherPlane/](https://mudit-r.github.io/AetherPlane/)
 
 ---
 
